@@ -23,6 +23,9 @@ const float VCC = 3.3;    //Vccは3.3のデバイスを使用
 const int MULTI_HIGH = 390;    //倍率器の抵抗Vcc側
 const int MULTI_LOW = 100;    //倍率器の抵抗GND側 high/lowがあってればOK
 const int VF = 0.1;   //挿入した整流用ダイオードの順方向電圧は計測したら0.1V
+const double cA = -0.1577; // 2次多項式近似の2乗項係数
+const double cB = 1.2329; // 2次多項式近似の1乗項係数
+const double cC = 0.056; // 2次多項式近似の定数項
 
 //=====【Software Configration】測定の仕様を変えたければ以下を変更すること
 const int NUMDET = 100;   //1つのデータにつき測定回数は100回
@@ -82,6 +85,9 @@ void loop()
   //平均値を導出 valの中身は実効値になる
   val = val / NUMDET;
   val = sqrt(val);
+
+  //2次方程式に近似してキャリブレーション
+  val = (val * val * 2) * cA + val * cB + cC;
   
   //valをOLEDに出力
   display.clearDisplay();
