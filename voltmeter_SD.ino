@@ -1,5 +1,6 @@
 /*  voltmeter_SD by K.Sakurai 20180714
  *  あちゃんでいいの使用デバイスで電圧を測定してSDカードに記録するデータロガーです。
+ *  スロットにSDカードを入れ、電源を入れると測定データを記録し続けます。
  *  使用ライブラリは Wire(I2C), SD, Adafruit_GFX, Adafruit_SSD1306
  *  Wireはプログラム中一回も使ってないように見えるけどたぶんAdafruit_SSD1306で使ってるから抜かないで。
  */
@@ -37,7 +38,7 @@ unsigned long time_zero;
 
 void setup()
 {
-//  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 
   //SDカードスロット初期化
   if (!SD.begin(chipSelect)) {
